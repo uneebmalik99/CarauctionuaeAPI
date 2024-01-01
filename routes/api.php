@@ -2,7 +2,13 @@
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
-
+use App\Http\Controllers\UserController;
+use App\Http\Controllers\Auth\RegisterController;
+use App\Http\Controllers\Auth\LoginController;
+use App\Http\Controllers\API\BiddingController;
+use App\Http\Controllers\API\AuctionAPI;
+use App\Http\Controllers\API\InvoiceController;
+use App\Http\Controllers\API\PasswordAPIController;
 /*
 |--------------------------------------------------------------------------
 | API Routes
@@ -14,34 +20,37 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::middleware('auth:api')->get('/user', function (Request $request) {
+Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
-Route::post('register', 'Auth\RegisterController@APIregister');
-Route::post('authenticate', 'Auth\LoginController@APIauthenticate');
-Route::post('logout', 'Auth\LoginController@APIlogout');
 
-//bidding
-Route::post('postBid', 'API\BiddingController@postBid');
-Route::get('getBids', 'API\BiddingController@getBids');
-Route::get('getBid', 'API\BiddingController@getBidOnAuction');
-Route::get('getAuction', 'API\AuctionAPI@getAuction');
-Route::get('getUserPreviousBids', 'API\BiddingController@getUserPreviousBids');
-Route::get('getUserLiveBids', 'API\BiddingController@getUserLiveBids');
+// User
+Route::middleware('auth:api')->get('/user', [UserController::class, 'getUser']);
 
-//auctions
-Route::get('purchased', 'API\AuctionAPI@purchased');
-Route::get('auction', 'API\AuctionAPI@index');
-Route::get('wonbids', 'API\AuctionAPI@wonbids');
+// Authentication
+Route::post('register', [RegisterController::class, 'APIregister']);
+Route::post('authenticate', [LoginController::class, 'APIauthenticate']);
+Route::post('logout', [LoginController::class, 'APIlogout']);
 
-//invoice
-Route::get('saveInvoiceData', 'API\InvoiceController@saveInvoiceData');
-Route::get('getInvoice', 'API\InvoiceController@getInvoice');
-Route::post('saveInvoiceImage', 'API\InvoiceController@saveInvoiceImage');
-Route::post('uploadinvoice', 'API\InvoiceController@uploadinvoice');
+// Bidding
+Route::post('postBid', [BiddingController::class, 'postBid']);
+Route::get('getBids', [BiddingController::class, 'getBids']);
+Route::get('getBid', [BiddingController::class, 'getBidOnAuction']);
+Route::get('getAuction', [AuctionAPI::class, 'getAuction']);
+Route::get('getUserPreviousBids', [BiddingController::class, 'getUserPreviousBids']);
+Route::get('getUserLiveBids', [BiddingController::class, 'getUserLiveBids']);
 
-//Password
-Route::get('resetPassword', 'API\PasswordAPIController@resetPassword');
-Route::post('resetPasswordToken', 'API\PasswordAPIController@resetPasswordToken');
+// Auctions
+Route::get('purchased', [AuctionAPI::class, 'purchased']);
+Route::get('auction', [AuctionAPI::class, 'index']);
+Route::get('wonbids', [AuctionAPI::class, 'wonbids']);
 
+// Invoice
+Route::get('saveInvoiceData', [InvoiceController::class, 'saveInvoiceData']);
+Route::get('getInvoice', [InvoiceController::class, 'getInvoice']);
+Route::post('saveInvoiceImage', [InvoiceController::class, 'saveInvoiceImage']);
+Route::post('uploadinvoice', [InvoiceController::class, 'uploadinvoice']);
 
+// Password
+Route::get('resetPassword', [PasswordAPIController::class, 'resetPassword']);
+Route::post('resetPasswordToken', [PasswordAPIController::class, 'resetPasswordToken']);

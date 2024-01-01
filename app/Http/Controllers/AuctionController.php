@@ -15,6 +15,7 @@ use Illuminate\Support\Facades\DB;
 use App\Purchased;
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Auth;
+use App\Bidding;
 
 class AuctionController extends Controller
 {
@@ -51,6 +52,9 @@ class AuctionController extends Controller
         //     return redirect('/login');
         // }
 
+    }
+    public function list(){
+        return view('auctions.list');
     }
 
     /**
@@ -144,7 +148,7 @@ class AuctionController extends Controller
 
         //return $auction;
        
-        broadcast(new newauctionEvent(json_encode($pusher)));
+        broadcast(new newauctionEvent($pusher));
 
         return back()->with('success','Form submitted successfully');
         //view('auctions.create');
@@ -315,5 +319,23 @@ class AuctionController extends Controller
     public function destroy(Auction $auction)
     {
         //
+    }
+
+    public function fetch_data(){
+        $auction = Auction::all();
+        return response()->json(['data' => $auction]);
+    }
+
+    public function view_bidding($id){
+        $data['auction_id'] = $id;
+        return view('auctions.view_bidding', $data);
+    }
+
+    public function view_bidding_list($id){
+
+        $bidding = Bidding::with('auctions', 'user')->where('auctionID', $id)->get();
+        return response()->json($bidding);
+        
+
     }
 }

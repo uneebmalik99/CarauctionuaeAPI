@@ -10,19 +10,19 @@ use Illuminate\Contracts\Broadcasting\ShouldBroadcast;
 use Illuminate\Foundation\Events\Dispatchable;
 use Illuminate\Queue\SerializesModels;
 
-class testEvent implements ShouldBroadcast
+class TestEvent implements ShouldBroadcast
 {
     use Dispatchable, InteractsWithSockets, SerializesModels;
 
+    public $username;
     /**
      * Create a new event instance.
      *
      * @return void
      */
-    public $data;
-    public function __construct($data)
+    public function __construct($username)
     {
-        $this->data = $data;
+        $this->username = $username;
     }
 
     /**
@@ -32,6 +32,6 @@ class testEvent implements ShouldBroadcast
      */
     public function broadcastOn()
     {
-        return new Channel('testing-channel');
+        return new Channel('test');
     }
 }

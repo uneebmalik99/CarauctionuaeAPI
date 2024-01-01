@@ -1,5 +1,4 @@
-@extends('layouts.app')
-@section('style')
+<x-app-layout>
 <style>
  .upload-invoice{
      display:none;
@@ -16,8 +15,6 @@
     justify-contents: center;
  }
 </style>
-@endsection
-@section('content')
 <div class="justify-content-center loader" style="display:none !important">
     <div class="spinner-grow" style="width: 3rem; height: 3rem;" role="status">
     <span class="sr-only">Loading...</span>
@@ -262,9 +259,7 @@
         </div>
     </div>
 </div>
-@endsection
 
-@push('scripts')
 <script type="text/javascript">
 
     function copyToken(element){
@@ -277,7 +272,6 @@
         el.select();
         document.execCommand('copy');
         document.body.removeChild(el);
-
         alert("Copied");
     }
 
@@ -421,4 +415,4 @@
         });
     });
 </script>
-@endpush
+</x-app-layout>

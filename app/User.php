@@ -16,8 +16,8 @@ class User extends Authenticatable
      *
      * @var array
      */
-    protected $guarded = [
-        //'name', 'email', 'password',
+    protected $fillable = [
+        'name', 'email', 'password',
     ];
 
     /**
@@ -47,5 +47,9 @@ class User extends Authenticatable
         $this->save();
 
         return $this->api_token;
+    }
+    
+    public function biddings(){
+        return $this->hasMany(Bidding::class, 'id', 'userID');
     }
 }

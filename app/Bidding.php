@@ -10,4 +10,12 @@ class Bidding extends Model
     protected $guarded = [];
     public $timestamps = false;
 
+
+    public function auctions(){
+        return $this->belongsTo(Auction::class, 'auctionID');
+    }
+    public function user(){
+        return $this->belongsTo(User::class, "userID");
+    }
+
 }

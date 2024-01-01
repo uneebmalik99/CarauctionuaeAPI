@@ -1,5 +1,4 @@
-@extends('layouts.app')
-@section('style')
+<x-app-layout>
 <style>
  label{
      font-weight:bold;
@@ -8,8 +7,6 @@
     font-weight:bold;
  }
 </style>
-@endsection
-@section('content')
 <div class="container">
     
     <img src="{{ asset('public/image/user.png')}}" alt="">
@@ -70,7 +67,7 @@
          <div class="input-group control-group increment upload-image" >
           <input type="file" name="filename[]" class="form-control">
           <div class="input-group-btn"> 
-            <button class="btn btn-success" type="button"><i class="glyphicon glyphicon-plus"></i>Add</button>
+            <button type="button" class="btn btn-success"><i class="glyphicon glyphicon-plus"></i>Add</button>
           </div>
         </div>
         <div class="clone hide" style="display:none">
@@ -1332,9 +1329,7 @@
     </form>
     </div>
 </div>
-@endsection
 
-@push('scripts')
 <script type="text/javascript">
 
     $("#timezoneoffset").val(new Date().getTimezoneOffset());
@@ -1355,4 +1350,4 @@
       });
     });
 </script>
-@endpush
+</x-app-layout>

@@ -20,9 +20,10 @@ class newauctionEvent implements ShouldBroadcast
      * @return void
      */
     public $data;
+
     public function __construct($data)
     {
-        $this->data = json_decode($data);
+        $this->data = $data;
     }
 
     /**

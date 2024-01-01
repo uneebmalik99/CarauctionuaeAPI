@@ -5,6 +5,7 @@ use App\Http\Controllers\Controller;
 use App\Bidding;
 use App\Events\testEvent;
 use App\Events\addSeconds;
+use App\Events\BiddingEvent;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Http\Request;
 use Carbon\Carbon;
@@ -30,7 +31,11 @@ class BiddingController extends Controller
         $bid->userDeviceID = $userDeviceID;
 
         $bid->save();
+        
+        $bidId = $bid->id;
 
+        $biddingRecord = Bidding::with('auctions', 'user')->where('id', $bidId)->first();
+        broadcast(new BiddingEvent($biddingRecord));
 
         $myBid = 0;
         $myUserId = 0;

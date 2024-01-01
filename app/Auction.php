@@ -17,5 +17,10 @@ class Auction extends Model
     'EndDate','ReserveCost','Note','CarBodyImage'];
 
     public $timestamps = false;
+
+
+    public function bidding(){
+        return $this->hasMany(Bidding::class, 'id', 'auctionID');
+    }
     
 }
